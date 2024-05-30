@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 
 const DriverDetails = ({ setPage, data }) => {
-  if (!data) return "rick";
+  /*   if (!data) return "rick"; */
   const [drivers, setDrivers] = useState([]);
   const [selectedDriver, setSelectedDriver] = useState(null);
 

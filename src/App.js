@@ -7,9 +7,9 @@ import Drivers from "./components/Drivers";
 function App() {
   // Shared logic and state will go here
   const [page, setPage] = useState("home");
-  
+
   // State with with all Drivers
-  
+
   /* State for selected Drivers Details. 
   - State Data Gets populated when user clicks on a driver
   - need to pass this WHEN POPULATED to the <DriverDetails />
@@ -29,7 +29,7 @@ function App() {
       <header className="App-header">
         {page === "home" && <Drivers setPage={setPage} />}
 
-        {page === "driverDetails" && <DriverDetails driverDetailsData={} />}
+        {page === "driverDetails" && <DriverDetails driverDetailsData={null} setPage={setPage} />}
       </header>
     </div>
   );
