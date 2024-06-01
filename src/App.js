@@ -1,36 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import DriverDetails from "./components/DriverDetails";
-import NavBar from "./components/NavBar";
 import Drivers from "./components/Drivers";
 
 function App() {
-  // Shared logic and state will go here
   const [page, setPage] = useState("home");
-  //changes here
+  const [drivers, setDrivers] = useState([]);
+  const [selectedDriver, setSelectedDriver] = useState(null)
 
-  // State with with all Drivers
-
-  /* State for selected Drivers Details. 
-  - State Data Gets populated when user clicks on a driver
-  - need to pass this WHEN POPULATED to the <DriverDetails />
-  - Clear the state when leaving the driver details page
-  - Make sure you account for latency, in <DriverDetails /> create a conditional that checks for data
-  */
-
-  // Call enpoint to get all drivers in a useEffect here
+  useEffect(() => {
+    fetch("https://api.openf1.org/v1/drivers?session_key=latest")
+      .then((response) => response.json())
+      .then((data) => {
+        setDrivers(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching driver data:", error);
+      });
+  }, []);
 
   return (
     <div className="App">
       <div className="Make me a nav bar">
-        <button onClick={() => setPage("driverDetails")}>
-          Driver Detail Page
-        </button>
       </div>
       <header className="App-header">
-        {page === "home" && <Drivers setPage={setPage} />}
-
-        {page === "driverDetails" && <DriverDetails driverDetailsData={null} setPage={setPage} />}
+        {page === "home" && (
+          <Drivers
+            drivers={drivers}
+            setPage={setPage}
+            setSelectedDriver={setSelectedDriver}
+          />
+        )}
+        {page === "driverDetails" && (
+          <DriverDetails
+            setSelectedDriver={setSelectedDriver}
+            selectedDriver={selectedDriver}
+            setPage={setPage}
+          />
+        )}
       </header>
     </div>
   );

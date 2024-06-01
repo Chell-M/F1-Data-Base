@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from "react";
-import NavBar from "./NavBar";
+import React from "react";
 
-const DriverDetails = ({ setPage, data }) => {
-  /*   if (!data) return "rick"; */
-  const [drivers, setDrivers] = useState([]);
-  const [selectedDriver, setSelectedDriver] = useState(null);
+const DriverDetails = ({ selectedDriver, setPage, setSelectedDriver }) => {
 
-  useEffect(() => {
-    fetch("https://api.openf1.org/v1/drivers?session_key=latest")
-      .then((response) => response.json())
+  if (!selectedDriver) return <div>Loading..</div>
 
-      .then((data) => {
-        setDrivers(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching driver data:", error);
-      });
-  }, []);
-
-  const handleClickDriver = (driver) => {
-    setSelectedDriver(driver);
-  };
+  const resetDriverDetails = () => {
+    setSelectedDriver(null)
+    setPage("home")
+  }
 
   return (
-    <div>
-      <button onClick={() => setPage("home")}>Go Back</button>
-      <h1>Driver Details</h1>
+    <div className="driver-details-container">
+      <button onClick={resetDriverDetails}>Go Back</button>
+      <div>
+        <h1>{selectedDriver.broadcast_name} #{selectedDriver.driver_number}</h1>
+        <img src={selectedDriver.headshot_url} alt="driver-headshot" />
+        <p>Full Name: {selectedDriver.first_name} {selectedDriver.last_name}</p>
+        <p>Team: {selectedDriver.team_name}</p>
+        <p>Country: {selectedDriver.country_code}</p>
+      </div>
     </div>
   );
 };
