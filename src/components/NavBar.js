@@ -10,9 +10,9 @@ const NavBar = ({ displayDriverDetails }) => {
 
   return (
     <div>
-      {/*       <button onClick={() => displayOnClick(DriverDetails)}></button> */}
+      <button onClick={() => displayOnClick(DriverDetails)}></button>
 
-    </div>
+    </div >
   )
 }
 
